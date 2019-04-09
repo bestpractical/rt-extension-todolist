@@ -1,0 +1,31 @@
+% $r->content_type('application/json; charset=utf-8');
+<% JSON( \@data ) |n %>
+% $m->abort;
+<%INIT>
+my @data = ({});
+
+if ( $POSTDATA ) {
+    my $args = JSON::decode_json($ARGS{'POSTDATA'});
+    $args->{'CurrentUser'} = $session{'CurrentUser'};
+
+    RT::Extension::TodoList->UpdateTodoListCustomField(
+        %{$args}
+    );
+    $m->abort;
+}
+
+if ( $UpdateTodoList ) {
+    my $html = '<p>No Todo List</p>';
+    $html = RT::Extension::TodoList->UpdateTodoList(
+        ObjectId => $ObjectId, CustomField => $CustomField,
+        CurrentUser => $session{'CurrentUser'}
+    );
+    @data = ({html => $html});
+}
+</%INIT>
+<%ARGS>
+$ObjectId        => undef
+$UpdateTodoList  => undef
+$POSTDATA        => undef
+$CustomField     => undef
+</%ARGS>

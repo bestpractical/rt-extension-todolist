@@ -1,0 +1,48 @@
+NAME
+    RT-Extension-TodoList
+
+DESCRIPTION
+    Add todo lists to tickets. Often a ticket will define a task that
+    requires several repeatable steps. For example: Deploy new server -
+    Order server - Find rack space - Confirm power - Run networking - Assign
+    IPs - Autoload base OS Those steps may need to be repeated each time a
+    new server is set up. One approach would be to create a linked
+    depends-on or child ticket for each one. However, they may be always
+    done by the same person (the ticket Owner) and may not other ticket
+    details tracked separately. This feature will also be useful in RTIR
+    where different incident types can display a different to do list, one
+    for Malware, one for DDos, one for Phising Email, etc.
+
+RT VERSION
+    Works with RT 4.4
+
+INSTALLATION
+    perl Makefile.PL
+    make
+    make install
+        May need root permissions
+
+    Edit your /opt/rt4/etc/RT_SiteConfig.pm
+        Add this line:
+
+            Plugin('RT::Extension::TodoList');
+
+    Clear your mason cache
+            rm -rf /opt/rt4/var/mason_data/obj
+
+    Restart your webserver
+
+AUTHOR
+    Best Practical Solutions, LLC <modules@bestpractical.com>
+
+    All bugs should be reported via email to
+        bug-RT-Extension-TodoList@rt.cpan.org
+    or via the web at
+        http://rt.cpan.org/Public/Dist/Display.html?Name=RT-Extension-TodoList
+LICENSE AND COPYRIGHT
+    This software is Copyright (c) 2019 by Best Practical LLC
+
+    This is free software, licensed under:
+
+      The GNU General Public License, Version 2, June 1991
+

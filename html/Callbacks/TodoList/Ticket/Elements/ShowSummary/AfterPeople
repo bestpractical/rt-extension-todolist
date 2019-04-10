@@ -1,1 +1,12 @@
-<& /Elements/TodoList, Object => $ARGS{'Ticket'} &>
+%  if ( $custom_fields->Count ) {
+    <& /Elements/TodoList, Object => $ARGS{'Ticket'} &>
+%  }
+<%init>
+return unless $Ticket;
+
+my $custom_fields = RT::CustomFields->new($session{'CurrentUser'});
+$custom_fields->LimitTodoToObject($Ticket->QueueObj->Id);
+</%init>
+<%args>
+$Ticket  => undef
+</%args>

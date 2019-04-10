@@ -45,6 +45,7 @@ sub LimitToNotTodo {
     while ( my $attribute = $attributes->Next ) {
         push @custom_field_ids, $attribute->ObjectId;
     }
+    return unless scalar @custom_field_ids;
 
     $self->Limit(
         FIELD         => 'Id',

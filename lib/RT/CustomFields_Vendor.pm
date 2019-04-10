@@ -4,6 +4,17 @@ sub LimitTodoToObject {
     my $self     = shift;
     my $ObjectId = shift;
 
+    my $attributes = RT::Attributes->new(RT->SystemUser);
+    $attributes->Limit(
+        FIELD         => 'Name',
+        OPERATOR      => '=',
+        VALUE         => 'TodoListCustomField',
+    );
+    my @custom_field_ids;
+    while ( my $attribute = $attributes->Next ) {
+        push @custom_field_ids, $attribute->ObjectId;
+    }
+
     $self->Limit(
         ALIAS           => $self->_OCFAlias,
         FIELD           => 'ObjectId',
@@ -13,25 +24,34 @@ sub LimitTodoToObject {
         SUBCLAUSE       => 'LimitToTodo'
     );
     $self->Limit(
-        FIELD         => 'Name',
-        OPERATOR      => 'LIKE',
-        CASESENSITIVE => 1,
-        VALUE         => 'TODO',
+        FIELD         => 'Id',
+        OPERATOR      => 'IN',
+        VALUE         => \@custom_field_ids,
         ENTRYAGGREGATOR => 'AND',
         SUBCLAUSE       => 'LimitToTodo'
     );
 }
 
 sub LimitToNotTodo {
-    my $self         = shift;
+    my $self = shift;
+
+    my $attributes = RT::Attributes->new(RT->SystemUser);
+    $attributes->Limit(
+        FIELD         => 'Name',
+        OPERATOR      => '=',
+        VALUE         => 'TodoListCustomField',
+    );
+    my @custom_field_ids;
+    while ( my $attribute = $attributes->Next ) {
+        push @custom_field_ids, $attribute->ObjectId;
+    }
 
     $self->Limit(
-        FIELD         => 'Name',
-        OPERATOR      => 'NOT LIKE',
-        SUBCLAUSE     => 'hide',
-        CASESENSITIVE => 1,
-        VALUE         => 'TODO:',
+        FIELD         => 'Id',
+        OPERATOR      => 'NOT IN',
+        VALUE         => \@custom_field_ids,
         ENTRYAGGREGATOR => 'AND',
+        SUBCLAUSE       => 'LimitToTodo'
     );
 }
 

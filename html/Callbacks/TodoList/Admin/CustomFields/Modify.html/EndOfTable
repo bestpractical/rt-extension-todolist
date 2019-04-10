@@ -1,0 +1,13 @@
+<tr><td class="label">&nbsp;</td><td>
+<input type="checkbox" class="checkbox" id="TodoListCustomField" name="TodoListCustomField" value="1" <% $TodoListCustomField |n %> />
+<label for="TodoListCustomField"><&|/l&>Todo List (Checking this box applies this custom field as a todo list field)</&></label>
+</td></tr>
+<%init>
+return unless $CustomField->Id;
+
+my $TodoListCustomField = '';
+$TodoListCustomField = qq[checked="checked"] if $CustomField->FirstAttribute('TodoListCustomField');
+</%init>
+<%args>
+$CustomField
+</%args>

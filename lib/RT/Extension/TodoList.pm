@@ -109,6 +109,10 @@ person (the ticket Owner) and may not other ticket details tracked separately. T
 be useful in RTIR where different incident types can display a different to do list, one for Malware,
 one for DDos, one for Phising Email, etc.
 
+To make a custom field a todo list custom field, create a new custom field of type "select multiple values".
+Once created there will be a checkbox option to make the custom field a todo list custom field, then you
+can apply the custom field by queue per usual.
+
 =head1 RT VERSION
 
 Works with RT 4.4

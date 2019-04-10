@@ -2,10 +2,9 @@
     <select id="RT-TodoList-Select" onchange="UpdateTodoList(<%$Object->Id%>)">
         <option value="" <% !$default && qq[ selected="selected"] |n %>><&|/l&>(no value)</&></option>
 % while ( my $cf = $custom_fields->Next ) {
-%       my $name = $cf->Name; $name =~ s/TODO://;
 %       $default_cf = $cf if defined $default && $cf->Id eq $default;
         <option name="<%$cf->Name%>" value=<% $cf->Id %> <% defined $default && $default eq $cf->Id ? 'selected="selected"': '' %>>
-            <% $name %>
+            <% $cf->Name %>
         </option>
 % }
     </select>

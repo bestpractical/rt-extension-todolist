@@ -1,0 +1,30 @@
+<%init>
+return unless $ARGSRef->{'id'} and  $ARGSRef->{'Update'};
+
+my ($ret, $msg);
+my $CustomFieldObj = RT::CustomField->new( $session{'CurrentUser'} );
+($ret, $msg) = $CustomFieldObj->Load($ARGSRef->{'id'});
+RT::Logger->error($msg) unless $ret;
+return unless $ret;
+
+if ( $ARGSRef->{'TodoListCustomField'} ) {
+    push @{$Results}, "Todo list custom field must be of type 'Select multiple values' and RenderType 'list'"
+        unless $ARGSRef->{'TypeComposite'} eq 'Select-0' and $ARGSRef->{'RenderType'} eq 'List';
+    return unless $ARGSRef->{'TypeComposite'} eq 'Select-0' and $ARGSRef->{'RenderType'} eq 'List';
+
+    if ( $CustomFieldObj->FirstAttribute('TodoListCustomField') ) {
+        return;
+    }
+
+    ($ret, $msg) = $CustomFieldObj->AddAttribute( Name => 'TodoListCustomField', Content => 1 );
+    push @{$Results}, $CustomFieldObj->Name . " is a todo list custom field" if $ret;
+} else {
+    ($ret, $msg) = $CustomFieldObj->DeleteAttribute( 'TodoListCustomField' );
+    push @{$Results}, $CustomFieldObj->Name . " is no longer a todo list custom field" if $ret;
+}
+RT::Logger->error($msg) unless $ret;
+</%init>
+<%args>
+$ARGSRef
+$Results
+</%args>

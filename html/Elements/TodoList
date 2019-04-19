@@ -1,22 +1,27 @@
 <&|/Widgets/TitleBox, title => loc("Todo List"), class => 'ticket-info-basics', &>
-    <select id="RT-TodoList-Select" onchange="UpdateTodoList(<%$Object->Id%>)">
-        <option value="" <% !$default && qq[ selected="selected"] |n %>><&|/l&>(no value)</&></option>
+    <div id="todo-list-container">
+      <div class="todo-list-container">
+        <select id="RT-TodoList-Select" onchange="UpdateTodoList(<%$Object->Id%>)">
+          <option value="" <% !$default && qq[ selected="selected"] |n %>><&|/l&>(no value)</&></option>
 % while ( my $cf = $custom_fields->Next ) {
 %       $default_cf = $cf if defined $default && $cf->Id eq $default;
-        <option name="<%$cf->Name%>" value=<% $cf->Id %> <% defined $default && $default eq $cf->Id ? 'selected="selected"': '' %>>
+          <option name="<%$cf->Name%>" value=<% $cf->Id %> <% defined $default && $default eq $cf->Id ? 'selected="selected"': '' %>>
             <% $cf->Name %>
-        </option>
+          </option>
 % }
-    </select>
-<div>
-    <form id="RT-TodoList" onchange="UpdateTodos()">
+      </select>
+    </div>
+    <div class="todo-list-container">
+      <form id="RT-TodoList" onchange="UpdateTodos()">
 %    if ( $default_cf ) {
         <& /Elements/EditCustomField,
-            CustomField => $default_cf,
-            Object      => $Object
+          CustomField => $default_cf,
+          Object      => $Object
         &>
 %    }
-    </form>
+      </form>
+    </div>
+  <div>
 </div>
 </&>
 

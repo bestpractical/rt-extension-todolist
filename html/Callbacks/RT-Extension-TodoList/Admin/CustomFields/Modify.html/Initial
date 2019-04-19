@@ -22,7 +22,6 @@ if ( $ARGSRef->{'TodoListCustomField'} ) {
     ($ret, $msg) = $CustomFieldObj->DeleteAttribute( 'TodoListCustomField' );
     push @{$Results}, $CustomFieldObj->Name . " is no longer a todo list custom field" if $ret;
 }
-RT::Logger->error($msg) unless $ret;
 </%init>
 <%args>
 $ARGSRef

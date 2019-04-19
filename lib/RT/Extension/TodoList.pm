@@ -80,10 +80,10 @@ sub UpdateTodoListCustomField {
 
             if ( $args{$key} =~ /RT-TodoList-Remove-(.+)/) {
                 ($ret, $msg) = $object->DeleteCustomFieldValue(Field => $cf_id, Value => $1);
-                RT::Logger->error("could remove value for custom field:  $cf_id :  $msg") unless $ret;
+                RT::Logger->error("could not remove value for custom field:  $cf_id :  $msg") unless $ret;
             } else {
                 ($ret, $msg) = $object->AddCustomFieldValue(Field => $cf_id, Value => $args{$key});
-                RT::Logger->error("could add value for custom field:  $cf_id :  $msg") unless $ret;
+                RT::Logger->error("could not add value for custom field:  $cf_id :  $msg") unless $ret;
             }
         }
     }
@@ -97,26 +97,22 @@ RT-Extension-TodoList
 
 Add todo lists to tickets. Often a ticket will define a task that requires several repeatable steps.
 For example:
-    Deploy new server
-        - Order server
-        - Find rack space
-        - Confirm power
-        - Run networking
-        - Assign IPs
-        - Autoload base OS
-Those steps may need to be repeated each time a new server is set up. One approach would be to create
-a linked depends-on or child ticket for each one. However, they may be always done by the same
-person (the ticket Owner) and may not other ticket details tracked separately. This feature will also
-be useful in RTIR where different incident types can display a different to do list, one for Malware,
-one for DDos, one for Phising Email, etc.
 
-To make a custom field a todo list custom field, create a new custom field of type "select multiple values".
-Once created there will be a checkbox option to make the custom field a todo list custom field, then you
-can apply the custom field by queue per usual.
+    'Deploy new server' = (
+        Order server,
+        Find rack space,
+        Confirm power,
+        Run networking,
+        Assign IPs,
+        Autoload base OS
+    );
+
+Where the steps listed above will generally always be the same for the task of deploying a new server
+rack. This extension make tracking these tasks from one ticket simple by adding a todo list that can be
+used repeatedly on any ticket created for the queue.
 
 =head1 RT VERSION
-
-Works with RT 4.4
+    Works with RT 4.4
 
 =head1 INSTALLATION
 
@@ -143,6 +139,17 @@ Add this line:
 =item Restart your webserver
 
 =back
+
+=head1 CONFIGURATION
+
+To make a custom field a todo list custom field, create a new custom field of type "select multiple values".
+Once created there will be a checkbox option to make the custom field a todo list custom field, then you
+can apply the custom field by queue per usual.
+
+Each item in the list will be a todo list checkbox item and each custom field applied to the queue as a todo
+list custom field will be available to load as the tickets todo's.
+
+=cut
 
 =head1 AUTHOR
 

@@ -14,6 +14,7 @@ sub LimitTodoToObject {
     while ( my $attribute = $attributes->Next ) {
         push @custom_field_ids, $attribute->ObjectId;
     }
+    return unless scalar @custom_field_ids;
 
     $self->Limit(
         ALIAS           => $self->_OCFAlias,

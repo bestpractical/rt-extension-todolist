@@ -4,7 +4,8 @@ package RT::Extension::TodoList;
 
 our $VERSION = '0.01';
 
-RT->AddJavaScript('TodoList.js');
+RT->AddStyleSheets('rt-extension-todolist.css');
+RT->AddJavaScript('rt-extension-todolist.js');
 
 sub UpdateTodoList {
     my $self = shift;

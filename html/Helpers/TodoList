@@ -11,7 +11,6 @@ if ( $POSTDATA ) {
     RT::Extension::TodoList->UpdateTodoListCustomField(
         %{$args}
     );
-    $m->abort;
 }
 
 if ( $UpdateTodoList ) {

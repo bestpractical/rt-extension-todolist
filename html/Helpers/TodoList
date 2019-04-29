@@ -14,7 +14,7 @@ if ( $POSTDATA ) {
 }
 
 if ( $UpdateTodoList ) {
-    my $html = '<p>No Todo List</p>';
+    my $html = '';
     $html = RT::Extension::TodoList->UpdateTodoList(
         ObjectId => $ObjectId, CustomField => $CustomField,
         CurrentUser => $session{'CurrentUser'}

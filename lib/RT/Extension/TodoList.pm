@@ -21,7 +21,7 @@ sub UpdateTodoList {
         ObjectId => $ObjectId, CustomField => $CustomField, CurrentUser => $args{'CurrentUser'}
     );
     RT::Logger->error("Could not set TodoList ticket attribute: $msg") unless $ret;
-    return '<p>No Todo List</p>' unless $CustomField;
+    return '' unless $CustomField;
 
     my $Object = RT::Ticket->new($args{'CurrentUser'});
     ($ret, $msg) = $Object->Load($ObjectId);

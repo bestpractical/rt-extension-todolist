@@ -1,6 +1,7 @@
 function UpdateTodoList (Object) {
     const CustomField = jQuery('#RT-TodoList-Select').val();
     fetch(RT.Config.WebHomePath + "/Helpers/TodoList?UpdateTodoList=1&ObjectId="+Object+"&CustomField="+CustomField, {
+       credentials: 'include',
     }).then(response => (response.json()))
     .then(json => {
           jQuery('#RT-TodoList').html(json[0].html)
@@ -22,10 +23,7 @@ function UpdateTodos () {
     values['UpdateTodo'] = 1;
     fetch(RT.Config.WebHomePath + "/Helpers/TodoList", {
         method: 'POST',
-        headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-        },
+        credentials: 'include',
         body: JSON.stringify(values)
     });
 };

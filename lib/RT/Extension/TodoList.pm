@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package RT::Extension::TodoList;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 RT->AddStyleSheets('rt-extension-todolist.css');
 RT->AddJavaScript('rt-extension-todolist.js');
@@ -112,7 +112,7 @@ rack. This extension make tracking these tasks from one ticket simple by adding 
 used repeatedly on any ticket created for the queue.
 
 =head1 RT VERSION
-    Works with RT 4.4
+    Works with RT 5.0
 
 =head1 INSTALLATION
 

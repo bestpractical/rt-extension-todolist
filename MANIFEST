@@ -25,6 +25,6 @@ Makefile.PL
 MANIFEST			This list of files
 META.yml
 README
-RT-Extension-TodoList-0.01/lib/RT/CustomFields_Vendor.pm
+lib/RT/CustomFields_Vendor.pm
 static/css/rt-extension-todolist.css
 static/js/rt-extension-todolist.js

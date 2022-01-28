@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package RT::Extension::TodoList;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 RT->AddStyleSheets('rt-extension-todolist.css');
 RT->AddJavaScript('rt-extension-todolist.js');

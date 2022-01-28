@@ -2,3 +2,6 @@ Revision history for RT-Extension-TodoList
 
 0.01 [Release Date]
  - Initial version
+
+0.03 
+ - Additional updates for ES5/IE11 compatibility

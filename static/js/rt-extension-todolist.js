@@ -1,18 +1,22 @@
 function UpdateTodoList (Object) {
-    const CustomField = jQuery('#RT-TodoList-Select').val();
-    fetch(RT.Config.WebHomePath + "/Helpers/TodoList?UpdateTodoList=1&ObjectId="+Object+"&CustomField="+CustomField, {
-       credentials: 'include',
-    }).then(response => (response.json()))
-    .then(json => {
-          jQuery('#RT-TodoList').html(json[0].html)
-      })
-      .catch(function (error) {
-        console.log('Request failed', error)
-      });
+    var CustomField = jQuery('#RT-TodoList-Select').val();
+    jQuery.ajax({
+        url: RT.Config.WebHomePath + "/Helpers/TodoList",
+        type: 'GET',
+        datatype: 'json',
+        data: {
+            UpdateTodoList: 1,
+            ObjectId: Object,
+            CustomField: CustomField,
+        },
+        success: function(response) {
+            jQuery('#RT-TodoList').html(response[0].html)
+        }
+    });
 };
 
 function UpdateTodos () {
-    let values = {};
+    var values = {};
     jQuery('#RT-TodoList :checkbox').each(function(){
         if ( jQuery(this).is(":checked") ) {
             values[this.id] = document.querySelectorAll("[for='"+this.id+"']")[0].innerHTML;
@@ -21,9 +25,12 @@ function UpdateTodos () {
         }
     });
     values['UpdateTodo'] = 1;
-    fetch(RT.Config.WebHomePath + "/Helpers/TodoList", {
+    jQuery.ajax({
+        url: RT.Config.WebHomePath + "/Helpers/TodoList",
         method: 'POST',
-        credentials: 'include',
-        body: JSON.stringify(values)
+        data: 'POSTDATA=' + JSON.stringify(values),
+        success: function(response) {
+            //console.error(response);
+        },
     });
 };

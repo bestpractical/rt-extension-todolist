@@ -3,5 +3,11 @@ Revision history for RT-Extension-TodoList
 0.01 [Release Date]
  - Initial version
 
+0.02
+ - Remove some ES6 syntax
+ - Improve behavior when no todo list selected
+ - Include credentials on fetch call
+ - Upddates for RT 5
+
 0.03 
  - Additional updates for ES5/IE11 compatibility

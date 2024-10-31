@@ -12,14 +12,22 @@
         </select>
       </div>
       <div id="todo-list-value-inputs" class="todo-list-container">
-        <form id="RT-TodoList" onchange="UpdateTodos()">
+%   if ( $ShowAsForm ) {
+          <form id="RT-TodoList" onchange="UpdateTodos()">
+%   } else {
+          <div id="RT-TodoList">
+%   }
 %    if ( $default_cf ) {
         <& /Elements/EditCustomField,
           CustomField => $default_cf,
           Object      => $Object
         &>
 %    }
-        </form>
+%   if ( $ShowAsForm ) {
+          </form>
+%   } else {
+          </div>
+%   }
       </div>
     </div>
 </&>
@@ -37,4 +45,5 @@ $custom_fields->LimitTodoToObject($Object->QueueObj->Id);
 $Object
 $UpdateTodoList  => undef
 $TodoCustomField => undef
+$ShowAsForm      => 1
 </%ARGS>

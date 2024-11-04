@@ -149,6 +149,13 @@ can apply the custom field by queue per usual.
 Each item in the list will be a todo list checkbox item and each custom field applied to the queue as a todo
 list custom field will be available to load as the tickets todo's.
 
+=head2 TodoListShowOnUpdate
+
+By default, the TodoList will not be shown on the ticket update page. If you want
+to show it, set the following in your F<RT_SiteConfig.pm>:
+
+    Set($TodoListShowOnUpdate, 1);
+
 =cut
 
 =head1 AUTHOR

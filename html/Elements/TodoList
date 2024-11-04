@@ -11,7 +11,8 @@
 % }
         </select>
       </div>
-      <div id="todo-list-value-inputs" class="todo-list-container">
+      <fieldset class="d-inline">
+        <div id="todo-list-value-inputs" class="todo-list-container">
 %   if ( $ShowAsForm ) {
           <form id="RT-TodoList" onchange="UpdateTodos()">
 %   } else {
@@ -28,7 +29,8 @@
 %   } else {
           </div>
 %   }
-      </div>
+        </div>
+      </fieldset>
     </div>
 </&>
 

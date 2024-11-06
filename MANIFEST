@@ -4,6 +4,7 @@ html/Callbacks/RT-Extension-TodoList/Admin/CustomFields/Modify.html/Initial
 html/Callbacks/RT-Extension-TodoList/Elements/EditCustomFields/MassageCustomFields
 html/Callbacks/RT-Extension-TodoList/Elements/ShowCustomFields/BeforeCustomFields
 html/Callbacks/RT-Extension-TodoList/Ticket/Elements/ShowSummary/AfterPeople
+html/Callbacks/RT-Extension-TodoList/Ticket/Update.html/RightColumnBottom
 html/Elements/TodoList
 html/Helpers/TodoList
 inc/Module/Install.pm

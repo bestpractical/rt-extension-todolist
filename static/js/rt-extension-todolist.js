@@ -1,21 +1,14 @@
-function UpdateTodoList (Object) {
+function getTodoListData (Object) {
     var CustomField = jQuery('#RT-TodoList-Select').val();
-    jQuery.ajax({
-        url: RT.Config.WebHomePath + "/Helpers/TodoList",
-        type: 'GET',
-        datatype: 'json',
-        data: {
+    var data = {
             UpdateTodoList: 1,
             ObjectId: Object,
             CustomField: CustomField,
-        },
-        success: function(response) {
-            jQuery('#RT-TodoList').html(response[0].html)
-        }
-    });
+        };
+    return data;
 };
 
-function UpdateTodos () {
+function getTodoData () {
     var values = {};
     jQuery('#RT-TodoList :checkbox').each(function(){
         if ( jQuery(this).is(":checked") ) {
@@ -25,12 +18,5 @@ function UpdateTodos () {
         }
     });
     values['UpdateTodo'] = 1;
-    jQuery.ajax({
-        url: RT.Config.WebHomePath + "/Helpers/TodoList",
-        method: 'POST',
-        data: 'POSTDATA=' + JSON.stringify(values),
-        success: function(response) {
-            //console.error(response);
-        },
-    });
+    return values;
 };

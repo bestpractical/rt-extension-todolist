@@ -140,7 +140,16 @@ Add this line:
 
 =back
 
+=head1 UPGRADING
+
+If you are upgrading to RT 6.0 or later, the C<$TodoListShowOnUpdate> config was removed.
+
+It is possible now to add the Todo List widget to the ticket update page on the page layout
+admin edit page.
+
 =head1 CONFIGURATION
+
+=head2 Creating the Todo Lists
 
 To make a custom field a todo list custom field, create a new custom field of type "select multiple values".
 Once created there will be a checkbox option to make the custom field a todo list custom field, then you
@@ -149,12 +158,10 @@ can apply the custom field by queue per usual.
 Each item in the list will be a todo list checkbox item and each custom field applied to the queue as a todo
 list custom field will be available to load as the tickets todo's.
 
-=head2 TodoListShowOnUpdate
+=head2 Choosing the places to show the Todo List
 
-By default, the TodoList will not be shown on the ticket update page. If you want
-to show it, set the following in your F<RT_SiteConfig.pm>:
-
-    Set($TodoListShowOnUpdate, 1);
+Since RT 6.0, the Todo List widget can be added to the ticket display and update pages. In order to do that,
+you need to go to the page layout admin edit page and add the Todo List widget to the desired page.
 
 =cut
 

@@ -1,7 +1,7 @@
 <&|/Widgets/TitleBox, title => loc("Todo List"), class => 'ticket-info-basics', &>
     <div id="todo-list-container">
       <div class="todo-list-container">
-        <select class="form-control selectpicker"
+        <select class="form-select selectpicker"
           id="RT-TodoList-Select"
           hx-post="<% RT->Config->Get('WebPath') %>/Helpers/TodoList"
           hx-trigger="change"

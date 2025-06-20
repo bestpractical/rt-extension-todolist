@@ -69,6 +69,7 @@ sub UpdateTodoListCustomField {
     # We have the object and custom field ID in the form of:
     # Object-RT::Ticket-6-CustomField-49-Values-66
     my ($object_type, $object_id, $cf_id, $cf_value_id);
+    my %values;
     foreach my $key (keys %args) {
         if ( $key =~ /Object-RT::(.+)-(\d+)-CustomField-(\d+)-Values-(\d+)/ ) {
             ($object_type, $object_id, $cf_id, $cf_value_id) = ($1, $2, $3);
@@ -79,8 +80,19 @@ sub UpdateTodoListCustomField {
             RT::Logger->error("could not load object: $msg") unless $ret;
 
             if ( $args{$key} =~ /RT-TodoList-Remove-(.+)/) {
-                ($ret, $msg) = $object->DeleteCustomFieldValue(Field => $cf_id, Value => $1);
-                RT::Logger->error("could not remove value for custom field:  $cf_id :  $msg") unless $ret;
+                my $remove_value = $1;
+                if ( !$values{$cf_id}{$object_id} ) {
+                    $values{$cf_id}{$object_id} = {};
+                    my $ocfvs = $object->CustomFieldValues($cf_id);
+                    while ( my $ocfv = $ocfvs->Next ) {
+                        $values{$cf_id}{$object_id}{$ocfv->Content} = $ocfv->Id;
+                    }
+                }
+
+                if ( my $value_id = $values{$cf_id}{$object_id}{$remove_value} ) {
+                    ( $ret, $msg ) = $object->DeleteCustomFieldValue( Field => $cf_id, ValueId => $value_id );
+                    RT::Logger->error("could not remove value for custom field:  $cf_id :  $msg") unless $ret;
+                }
             } else {
                 ($ret, $msg) = $object->AddCustomFieldValue(Field => $cf_id, Value => $args{$key});
                 RT::Logger->error("could not add value for custom field:  $cf_id :  $msg") unless $ret;

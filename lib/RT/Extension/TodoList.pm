@@ -107,7 +107,9 @@ RT-Extension-TodoList
 
 =head1 DESCRIPTION
 
-Add todo lists to tickets. Often a ticket will define a task that requires several repeatable steps.
+Add todo lists to tickets. Often a ticket will define a task that requires
+several repeatable steps.
+
 For example:
 
     'Deploy new server' = (
@@ -119,12 +121,14 @@ For example:
         Autoload base OS
     );
 
-Where the steps listed above will generally always be the same for the task of deploying a new server
-rack. This extension make tracking these tasks from one ticket simple by adding a todo list that can be
-used repeatedly on any ticket created for the queue.
+Where the steps listed above will generally always be the same for the task of
+deploying a new server rack. This extension make tracking these tasks from one
+ticket simple by adding a todo list that can be used repeatedly on any ticket
+created for the queue.
 
 =head1 RT VERSION
-    Works with RT 5.0
+
+    Works with RT 6.0. For RT 5.0 install the latest 0.X version.
 
 =head1 INSTALLATION
 
@@ -138,7 +142,7 @@ used repeatedly on any ticket created for the queue.
 
 May need root permissions
 
-=item Edit your F</opt/rt4/etc/RT_SiteConfig.pm>
+=item Edit your F</opt/rt6/etc/RT_SiteConfig.pm>
 
 Add this line:
 
@@ -146,34 +150,30 @@ Add this line:
 
 =item Clear your mason cache
 
-    rm -rf /opt/rt4/var/mason_data/obj
+    rm -rf /opt/rt6/var/mason_data/obj
 
 =item Restart your webserver
 
 =back
 
-=head1 UPGRADING
-
-If you are upgrading to RT 6.0 or later, the C<$TodoListShowOnUpdate> config was removed.
-
-It is possible now to add the Todo List widget to the ticket update page on the page layout
-admin edit page.
-
 =head1 CONFIGURATION
 
 =head2 Creating the Todo Lists
 
-To make a custom field a todo list custom field, create a new custom field of type "select multiple values".
-Once created there will be a checkbox option to make the custom field a todo list custom field, then you
-can apply the custom field by queue per usual.
+To make a custom field a todo list custom field, create a new custom field of
+type "select multiple values". Once created there will be a checkbox option to
+make the custom field a todo list custom field, then you can apply the custom
+field by queue per usual.
 
-Each item in the list will be a todo list checkbox item and each custom field applied to the queue as a todo
-list custom field will be available to load as the tickets todo's.
+Each item in the list will be a todo list checkbox item and each custom field
+applied to the queue as a todo list custom field will be available to load as
+the tickets todo's.
 
-=head2 Choosing the places to show the Todo List
+=head2 Choosing where to show the Todo List
 
-Since RT 6.0, the Todo List widget can be added to the ticket display and update pages. In order to do that,
-you need to go to the page layout admin edit page and add the Todo List widget to the desired page.
+The Todo List widget can be added to ticket display and update page layouts. Go
+to page layout admin and add the Todo List widget to the desired ticket page
+layout.
 
 =cut
 
@@ -194,7 +194,7 @@ href="http://rt.cpan.org/Public/Dist/Display.html?Name=RT-Extension-TodoList">rt
 
 =head1 LICENSE AND COPYRIGHT
 
-This software is Copyright (c) 2019 by Best Practical LLC
+This software is Copyright (c) 2025 by Best Practical LLC
 
 This is free software, licensed under:
 

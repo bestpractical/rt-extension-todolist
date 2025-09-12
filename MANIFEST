@@ -3,10 +3,10 @@ html/Callbacks/RT-Extension-TodoList/Admin/CustomFields/Modify.html/EndOfTable
 html/Callbacks/RT-Extension-TodoList/Admin/CustomFields/Modify.html/Initial
 html/Callbacks/RT-Extension-TodoList/Elements/EditCustomFields/MassageCustomFields
 html/Callbacks/RT-Extension-TodoList/Elements/ShowCustomFields/BeforeCustomFields
-html/Callbacks/RT-Extension-TodoList/Ticket/Elements/ShowSummary/AfterPeople
-html/Callbacks/RT-Extension-TodoList/Ticket/Update.html/RightColumnBottom
 html/Elements/TodoList
 html/Helpers/TodoList
+html/Ticket/Widgets/Display/TodoList
+html/Ticket/Widgets/Update/TodoList
 inc/Module/Install.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm

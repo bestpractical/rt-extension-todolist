@@ -3,7 +3,9 @@ NAME
 
 DESCRIPTION
     Add todo lists to tickets. Often a ticket will define a task that
-    requires several repeatable steps. For example:
+    requires several repeatable steps.
+
+    For example:
 
         'Deploy new server' = (
             Order server,
@@ -20,24 +22,26 @@ DESCRIPTION
     repeatedly on any ticket created for the queue.
 
 RT VERSION
-    Works with RT 5.0
+        Works with RT 6.0. For RT 5.0 install the latest 0.X version.
+
 INSTALLATION
     perl Makefile.PL
     make
     make install
         May need root permissions
 
-    Edit your /opt/rt4/etc/RT_SiteConfig.pm
+    Edit your /opt/rt6/etc/RT_SiteConfig.pm
         Add this line:
 
             Plugin('RT::Extension::TodoList');
 
     Clear your mason cache
-            rm -rf /opt/rt4/var/mason_data/obj
+            rm -rf /opt/rt6/var/mason_data/obj
 
     Restart your webserver
 
 CONFIGURATION
+  Creating the Todo Lists
     To make a custom field a todo list custom field, create a new custom
     field of type "select multiple values". Once created there will be a
     checkbox option to make the custom field a todo list custom field, then
@@ -47,11 +51,10 @@ CONFIGURATION
     field applied to the queue as a todo list custom field will be available
     to load as the tickets todo's.
 
-  TodoListShowOnUpdate
-    By default, the TodoList will not be shown on the ticket update page. If
-    you want to show it, set the following in your RT_SiteConfig.pm:
-
-        Set($TodoListShowOnUpdate, 1);
+  Choosing where to show the Todo List
+    The Todo List widget can be added to ticket display and update page
+    layouts. Go to page layout admin and add the Todo List widget to the
+    desired ticket page layout.
 
 AUTHOR
     Best Practical Solutions, LLC <modules@bestpractical.com>
@@ -61,7 +64,7 @@ AUTHOR
     or via the web at
         http://rt.cpan.org/Public/Dist/Display.html?Name=RT-Extension-TodoList
 LICENSE AND COPYRIGHT
-    This software is Copyright (c) 2019 by Best Practical LLC
+    This software is Copyright (c) 2025 by Best Practical LLC
 
     This is free software, licensed under:
 

@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package RT::Extension::TodoList;
 
-our $VERSION = '0.04';
+our $VERSION = '1.00';
 
 RT->AddStyleSheets('rt-extension-todolist.css');
 RT->AddJavaScript('rt-extension-todolist.js');
@@ -69,6 +69,7 @@ sub UpdateTodoListCustomField {
     # We have the object and custom field ID in the form of:
     # Object-RT::Ticket-6-CustomField-49-Values-66
     my ($object_type, $object_id, $cf_id, $cf_value_id);
+    my %values;
     foreach my $key (keys %args) {
         if ( $key =~ /Object-RT::(.+)-(\d+)-CustomField-(\d+)-Values-(\d+)/ ) {
             ($object_type, $object_id, $cf_id, $cf_value_id) = ($1, $2, $3);
@@ -79,8 +80,19 @@ sub UpdateTodoListCustomField {
             RT::Logger->error("could not load object: $msg") unless $ret;
 
             if ( $args{$key} =~ /RT-TodoList-Remove-(.+)/) {
-                ($ret, $msg) = $object->DeleteCustomFieldValue(Field => $cf_id, Value => $1);
-                RT::Logger->error("could not remove value for custom field:  $cf_id :  $msg") unless $ret;
+                my $remove_value = $1;
+                if ( !$values{$cf_id}{$object_id} ) {
+                    $values{$cf_id}{$object_id} = {};
+                    my $ocfvs = $object->CustomFieldValues($cf_id);
+                    while ( my $ocfv = $ocfvs->Next ) {
+                        $values{$cf_id}{$object_id}{$ocfv->Content} = $ocfv->Id;
+                    }
+                }
+
+                if ( my $value_id = $values{$cf_id}{$object_id}{$remove_value} ) {
+                    ( $ret, $msg ) = $object->DeleteCustomFieldValue( Field => $cf_id, ValueId => $value_id );
+                    RT::Logger->error("could not remove value for custom field:  $cf_id :  $msg") unless $ret;
+                }
             } else {
                 ($ret, $msg) = $object->AddCustomFieldValue(Field => $cf_id, Value => $args{$key});
                 RT::Logger->error("could not add value for custom field:  $cf_id :  $msg") unless $ret;
@@ -95,7 +107,9 @@ RT-Extension-TodoList
 
 =head1 DESCRIPTION
 
-Add todo lists to tickets. Often a ticket will define a task that requires several repeatable steps.
+Add todo lists to tickets. Often a ticket will define a task that requires
+several repeatable steps.
+
 For example:
 
     'Deploy new server' = (
@@ -107,12 +121,14 @@ For example:
         Autoload base OS
     );
 
-Where the steps listed above will generally always be the same for the task of deploying a new server
-rack. This extension make tracking these tasks from one ticket simple by adding a todo list that can be
-used repeatedly on any ticket created for the queue.
+Where the steps listed above will generally always be the same for the task of
+deploying a new server rack. This extension make tracking these tasks from one
+ticket simple by adding a todo list that can be used repeatedly on any ticket
+created for the queue.
 
 =head1 RT VERSION
-    Works with RT 5.0
+
+    Works with RT 6.0. For RT 5.0 install the latest 0.X version.
 
 =head1 INSTALLATION
 
@@ -126,7 +142,7 @@ used repeatedly on any ticket created for the queue.
 
 May need root permissions
 
-=item Edit your F</opt/rt4/etc/RT_SiteConfig.pm>
+=item Edit your F</opt/rt6/etc/RT_SiteConfig.pm>
 
 Add this line:
 
@@ -134,7 +150,7 @@ Add this line:
 
 =item Clear your mason cache
 
-    rm -rf /opt/rt4/var/mason_data/obj
+    rm -rf /opt/rt6/var/mason_data/obj
 
 =item Restart your webserver
 
@@ -142,19 +158,22 @@ Add this line:
 
 =head1 CONFIGURATION
 
-To make a custom field a todo list custom field, create a new custom field of type "select multiple values".
-Once created there will be a checkbox option to make the custom field a todo list custom field, then you
-can apply the custom field by queue per usual.
+=head2 Creating the Todo Lists
 
-Each item in the list will be a todo list checkbox item and each custom field applied to the queue as a todo
-list custom field will be available to load as the tickets todo's.
+To make a custom field a todo list custom field, create a new custom field of
+type "select multiple values". Once created there will be a checkbox option to
+make the custom field a todo list custom field, then you can apply the custom
+field by queue per usual.
 
-=head2 TodoListShowOnUpdate
+Each item in the list will be a todo list checkbox item and each custom field
+applied to the queue as a todo list custom field will be available to load as
+the tickets todo's.
 
-By default, the TodoList will not be shown on the ticket update page. If you want
-to show it, set the following in your F<RT_SiteConfig.pm>:
+=head2 Choosing where to show the Todo List
 
-    Set($TodoListShowOnUpdate, 1);
+The Todo List widget can be added to ticket display and update page layouts. Go
+to page layout admin and add the Todo List widget to the desired ticket page
+layout.
 
 =cut
 
@@ -175,7 +194,7 @@ href="http://rt.cpan.org/Public/Dist/Display.html?Name=RT-Extension-TodoList">rt
 
 =head1 LICENSE AND COPYRIGHT
 
-This software is Copyright (c) 2019 by Best Practical LLC
+This software is Copyright (c) 2025 by Best Practical LLC
 
 This is free software, licensed under:
 

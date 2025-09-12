@@ -1,7 +1,12 @@
 <&|/Widgets/TitleBox, title => loc("Todo List"), class => 'ticket-info-basics', &>
     <div id="todo-list-container">
       <div class="todo-list-container">
-        <select class="form-control selectpicker" id="RT-TodoList-Select" onchange="UpdateTodoList(<%$Object->Id%>)">
+        <select class="form-select selectpicker"
+          id="RT-TodoList-Select"
+          hx-post="<% RT->Config->Get('WebPath') %>/Helpers/TodoList"
+          hx-trigger="change"
+          hx-vals='js:{ ...getTodoListData(<% $Object->Id %>)}'
+          hx-target="#RT-TodoList">
           <option value="" <% !$default && qq[ selected="selected"] |n %>><&|/l&>(no value)</&></option>
 % while ( my $cf = $custom_fields->Next ) {
 %       $default_cf = $cf if defined $default && $cf->Id eq $default;
@@ -14,7 +19,12 @@
       <fieldset class="d-inline">
         <div id="todo-list-value-inputs" class="todo-list-container">
 %   if ( $ShowAsForm ) {
-          <form id="RT-TodoList" onchange="UpdateTodos()">
+          <form id="RT-TodoList"
+            hx-post="<% RT->Config->Get('WebPath') %>/Helpers/TodoList"
+            hx-trigger="change"
+            hx-vals='js:{ "POSTDATA": getTodoData()}'
+            hx-swap="none"
+            hx-boost="false">
 %   } else {
           <div id="RT-TodoList">
 %   }
